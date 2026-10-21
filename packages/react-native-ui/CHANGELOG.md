@@ -1,5 +1,34 @@
 # @delacour/react-native-ui
 
+## 0.5.0
+
+### Minor Changes
+
+- [#252](https://github.com/delacournz/delacour-ui/pull/252) [`56f5d10`](https://github.com/delacournz/delacour-ui/commit/56f5d1026d2884815a71118c34e09ea78a2a9982) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - `Flow` draws its edges, background, connection preview and minimap with Skia instead of `react-native-svg`, so `react-native-skia` is now an optional peer it needs, as `Chart` and `Sketch` do. The background is a runtime shader that stays sharp at any zoom. `useThemeColors` resolves several theme colours in one lookup.
+
+- [#249](https://github.com/delacournz/delacour-ui/pull/249) [`36b3b80`](https://github.com/delacournz/delacour-ui/commit/36b3b80fe8def84acc3c5a913c576bf32cf92c27) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - Signature: the pad draws its strokes with Skia instead of `react-native-svg` — the finished strokes as one recorded picture and the stroke under the finger as a path traced on the UI thread, with no path string built and parsed per frame. `traceStroke` is exported for drawing a stroke into a Skia path builder; `smoothStroke`, `toSVG()` and `toPaths()` are unchanged. `react-native-skia` is now needed by `Signature`.
+
+  Signature: the ref gains `toPNG()`, the signature as a base64 PNG framed and coloured exactly as `toSVG()` with the same options, at `scale` pixels per point. `resolveSignatureExport` and `signaturePngSize` are exported.
+
+- [#251](https://github.com/delacournz/delacour-ui/pull/251) [`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - Move to `react-native-skia` 3, the package `@shopify/react-native-skia` was renamed to. The optional `react-native-skia` peer replaces `@shopify/react-native-skia` and needs `>=3`, which needs Android `minSdkVersion` 26. `Sketch`'s `toPNG()` renders on `Skia.Surface.MakeRaster`.
+
+### Patch Changes
+
+- [#247](https://github.com/delacournz/delacour-ui/pull/247) [`3090648`](https://github.com/delacournz/delacour-ui/commit/30906486b8cd402a9b0975bbd14a5d2998c5bbad) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - SectionProgress's pill now eases to each section's title width instead of jumping, and the titles slide out and in as the section changes — up for a later section, down for an earlier one. Reduce motion snaps the width and only fades. `useSectionProgress()` gains `index`, the active section's position.
+
+- [#247](https://github.com/delacournz/delacour-ui/pull/247) [`3090648`](https://github.com/delacournz/delacour-ui/commit/30906486b8cd402a9b0975bbd14a5d2998c5bbad) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - SectionProgress's pill now grows into its card as one surface — width, height and corners together, the list fading in as the card opens — instead of swapping a capsule for a scaled-in card. The card hugs a short list and stops at six rows, past which it scrolls. Reduce motion snaps the size and only fades the list.
+
+- [#247](https://github.com/delacournz/delacour-ui/pull/247) [`3090648`](https://github.com/delacournz/delacour-ui/commit/30906486b8cd402a9b0975bbd14a5d2998c5bbad) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - `SectionProgress` draws its ring with Skia instead of `react-native-svg`: a track circle and a fill path trimmed to the progress shared value, with the same size, stroke, colours and twelve o'clock start. `react-native-skia` (already an optional peer) is now needed by `section-progress`. `resolveRingDashOffset` is replaced by `resolveRingTrimEnd` (the clamped 0–1 trim) and `resolveRingOval` (the stroke's centre-line box).
+
+- [#251](https://github.com/delacournz/delacour-ui/pull/251) [`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - Fix Skia canvases — `Chart`, `Sketch` — that came up blank after a JS reload (the dev menu's, or `Updates.reloadAsync` after an OTA update) until something re-rendered them. Skia restarts its canvas ids at 1000 in every runtime while its native registry still holds the old runtime's ids as torn down; each runtime now starts its ids in a fresh range.
+
+- [#248](https://github.com/delacournz/delacour-ui/pull/248) [`9ba73a4`](https://github.com/delacournz/delacour-ui/commit/9ba73a442991496cd7a8a93cabb7e9343e54963c) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - `Tour` draws its dimmed mask with Skia instead of react-native-svg: a window-sized rect with the spotlight clipped out, its rounded-rectangle hole derived on the UI thread from the existing shared values rather than rebuilt as a path string every frame. `react-native-skia` is now a peer of `Tour`, and the mask imports `lib/skia-native-id` like `Sketch` so it still draws after a JS reload. `resolveMaskHole` is exported; `buildMaskPath` is deprecated and no longer used by the tour.
+
+  Between steps the hole now crossfades — the old one fades closed while the new one opens — instead of sliding across the screen, and the card stays mounted and glides to its new place instead of blinking out and fading back in. Under reduce motion the card jumps; the hole still fades. Opening the tour now has an entrance: the dim fades up around the first hole and the card follows a beat later, rising a few points into place (reduce motion keeps the fade and drops the rise). `TOUR_CARD_FADE_MS` is now 240. `TOUR_HOLE_FADE_MS`, `TOUR_ENTER_MS`, `resolveTourHoleFadeDuration`, `resolveTourCardEntrance` and `isSameHoleRect` are exported.
+
+- Updated dependencies [[`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c), [`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c)]:
+  - @delacour/react-native-charts@0.2.0
+
 ## 0.4.1
 
 ### Patch Changes

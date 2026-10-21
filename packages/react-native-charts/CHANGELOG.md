@@ -1,5 +1,15 @@
 # @delacour/react-native-charts
 
+## 0.2.0
+
+### Minor Changes
+
+- [#251](https://github.com/delacournz/delacour-ui/pull/251) [`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - Move to `react-native-skia` 3, the package `@shopify/react-native-skia` was renamed to. The optional `react-native-skia` peer replaces `@shopify/react-native-skia` and needs `>=3`, which needs Android `minSdkVersion` 26. `Sketch`'s `toPNG()` renders on `Skia.Surface.MakeRaster`.
+
+### Patch Changes
+
+- [#251](https://github.com/delacournz/delacour-ui/pull/251) [`73b5b90`](https://github.com/delacournz/delacour-ui/commit/73b5b903a690078dc31764102e57dd64861e309c) Thanks [@UrbanChrisy](https://github.com/UrbanChrisy)! - Fix Skia canvases — `Chart`, `Sketch` — that came up blank after a JS reload (the dev menu's, or `Updates.reloadAsync` after an OTA update) until something re-rendered them. Skia restarts its canvas ids at 1000 in every runtime while its native registry still holds the old runtime's ids as torn down; each runtime now starts its ids in a fresh range.
+
 ## 0.1.0
 
 ### Minor Changes
