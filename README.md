@@ -49,6 +49,7 @@ Every package carries an `AGENTS.md`, and it is the real documentation — the
 design decisions, the constraints, and the reasoning behind them.
 
 - [Repo conventions](AGENTS.md) — workspaces, the version catalog, hooks, commits
+- [Library improvement proposal](docs/library-improvement-proposal.md) — priorities, source findings, and acceptance checks
 - [`react-native-ui`](packages/react-native-ui/AGENTS.md) — the library's rules, plus a file
   per component under [`src/components`](packages/react-native-ui/src/components)
 - [`playground`](apps/playground/AGENTS.md) — routes, Metro, adding a gallery
